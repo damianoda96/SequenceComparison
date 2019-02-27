@@ -78,11 +78,6 @@ def calc_table_vals(table, s, t):
 
 	return table
 
-
-def get_alignment(table, s, t): # traverse through values for best alignment
-
-	pass
-
 def max(a, b, c): # takes three options, will return the bext one 
 
 	max_val = a
@@ -95,6 +90,12 @@ def max(a, b, c): # takes three options, will return the bext one
 
 	return max_val
 
+
+def get_alignment(table, s, t): # traverse through values for best alignment
+
+	pass
+
+
 def main():
 
 	s = "CATCACCT"
@@ -105,7 +106,7 @@ def main():
 
 	table = calc_table_vals(table, s, t)
 
-	best = get_aligment(table, s, t)
+	best = get_alignment(table, s, t)
 
 	print("\n")
 
