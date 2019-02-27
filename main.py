@@ -93,7 +93,20 @@ def max(a, b, c): # takes three options, will return the bext one
 
 def get_alignment(table, s, t): # traverse through values for best alignment
 
-	pass
+	best = ""
+	starting_x = 0
+	starting_y = 0
+	max_val = table[0][0] # starting point
+
+	# get max value in all of table as starting point
+
+	for i in range(len(table)):
+		for j in range(len(table[i])):
+			if table[i][j] > max_val:
+				max_val = table[i][j]
+
+	print("\nMax: " + str(max_val))
+	print("Index: " + str(j) + "," + str(i))
 
 
 def main():
