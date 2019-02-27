@@ -1,11 +1,9 @@
+# Bioinformatics Project 2
+
 def make_table(s, t):
 	# local alignment Smith and Waterman
 
 	vals = []
-
-	match = 1
-	mismatch = -1
-	gap = -2
 
 	for i in range(len(t) + 1): # 1 extra for empty row / column
 
@@ -18,30 +16,59 @@ def make_table(s, t):
 		vals.append(vals_y)
 		del vals_y
 
-	# print(s)
-
 	print("\n")
-
-	for i in range(len(t) + 1):
-		'''if i > 0:
-			print(t[i - 1] + " "  + str(vals_x[i]))
-		else:
-			print("  "  + str(vals_x[i]))'''
-
-		print(vals[i])
-		
-
-	print("\n#####################################################\n")
 
 	return vals
 
+def calc_table_vals(table, s, t):
 
-def align(table, s, t): # utilize Smith and Wunsch algorithm
+	# alwasys choose best case, should never be negative
+
+	match = 1
+	mismatch = -1
+	gap = -2
 	
 	for i in range(len(table)):
 		for j in range(len(table[i])):
-			if i == 0 or j == 0:
-				table[i][j] = 1
+
+			# some primitive logic
+
+			if i == 0 or j == 0: # empty row/column always 0
+				table[i][j] = 0
+			else: 
+
+				val_a = 0 # for diagonal
+				val_b = 0 # for up
+				val_c = 0 # for left
+
+				# here we pick our max value
+
+				# for 'diagonal' option
+
+				if(t[i - 1] == s[j - 1]):
+					val_a = 1 + table[i-1][j-1] # sets string matches to 1
+				elif(t[i - 1 != s[j - 1]]):
+					val_a = -1 + table[i-1][j-1]
+
+				# for 'up' option:
+
+				val_b = -2 + table[i-1][j]
+
+				# for 'left' option:
+
+				val_c = -2 + table[i][j-1]
+
+
+				# assign the max of the three options
+
+				max_val = max(val_a, val_b, val_c)
+
+				if(max_val >= 0): # we ignore negative values and just assign 0
+
+					table[i][j] = max_val
+
+				else:
+					table[i][j] = 0
 
 	# print out to verify
 
@@ -49,17 +76,37 @@ def align(table, s, t): # utilize Smith and Wunsch algorithm
 
 		print(table[i])
 
+	return table
 
+
+def get_alignment(table, s, t): # traverse through values for best alignment
+
+	pass
+
+def max(a, b, c): # takes three options, will return the bext one 
+
+	max_val = a
+
+	if(b > max_val):
+		max_val = b
+
+	if(c > max_val):
+		max_val = c
+
+	return max_val
 
 def main():
 
-	s = "GATCACCT"
+	s = "CATCACCT"
 	t = "GATACCC"
+	best = ""
 
 	table = make_table(s, t)
 
-	align(table, s, t)
+	table = calc_table_vals(table, s, t)
 
-	# print("\n")
+	best = get_aligment(table, s, t)
+
+	print("\n")
 
 main()
