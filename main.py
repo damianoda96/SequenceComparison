@@ -13,7 +13,7 @@ def read_in_sequences():
         file_name = input("\nEnter the name of the file to load:\n")
         
         try:
-            
+            print(os.path.abspath(file_name))
             file = open(file_name, "r")
             
             sequence1 = file.readline().strip() 
@@ -192,7 +192,7 @@ def main():
     best = ""
     userInput = ""
     
-    file_data = read_in_sequences()
+    #file_data = read_in_sequences()
     
     # simpler to test with above assinments for now
     #s = file_data[0]
@@ -202,10 +202,7 @@ def main():
 
     table = calc_table_vals(table, s, t)
     
-    
-    while userInput not in ["y", "Y", "n", "N"]:
-        
-        user_input = input("Save generated table to file? (y/n)")
+    user_input = input("Save generated table to file? (y/n)")
     
     if user_input in ["y", "Y"]:
         print_table_to_file(table)
