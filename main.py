@@ -259,8 +259,6 @@ def main():
     s = "CATCACCT"
     t = "GATACCC"
     userInput = ""
-
-    #### TODO: Allow reading in flu_0.txt to strings in correct format.. ####
     
     #file_data = read_in_sequences()
     
