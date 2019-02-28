@@ -152,7 +152,7 @@ def calc_table_vals(table, s, t):
     return table
 
 
-def max(a, b, c): # takes three options, will return the bext one 
+def max(a, b, c): # takes three options, will return the max 
     
     max_val = a
     
@@ -181,9 +181,10 @@ def get_alignment(table, s, t): # traverse through values for best alignment
     
     print("\nMax: " + str(max_val))
     print("Index: " + str(j) + "," + str(i))
+
+    ########### TODO: starting at max index, get best alignment ##################
     
-
-
+    return best
 
 def main():
 
@@ -191,6 +192,8 @@ def main():
     t = "GATACCC"
     best = ""
     userInput = ""
+
+    #### TODO: Allow reading in flu_0.txt to strings in correct format.. ####
     
     #file_data = read_in_sequences()
     
@@ -198,7 +201,11 @@ def main():
     #s = file_data[0]
     #t = file_data[1]
 
+    # make table of correct size, fill with zeros
+
     table = make_table(s, t)
+
+    # sift through strings and calc the table's values
 
     table = calc_table_vals(table, s, t)
     
@@ -206,6 +213,8 @@ def main():
     
     if user_input in ["y", "Y"]:
         print_table_to_file(table)
+
+    # traverse our table for the best alignment
 
     best = get_alignment(table, s, t)
 
