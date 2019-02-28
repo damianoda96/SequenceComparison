@@ -166,11 +166,11 @@ def max(a, b, c): # takes three options, will return the max
 
 
 def get_alignment(table, s, t): # traverse through values for best alignment
-    
-    best = ""
+   
     starting_x = 0
     starting_y = 0
     max_val = table[0][0] # starting point
+    best = ""
     
     # get max value in all of table as starting point
     
@@ -178,19 +178,86 @@ def get_alignment(table, s, t): # traverse through values for best alignment
         for j in range(len(table[i])):
             if table[i][j] > max_val:
                 max_val = table[i][j]
+
+                starting_x = i
+                starting_y = j
     
     print("\nMax: " + str(max_val))
     print("Index: " + str(j) + "," + str(i))
 
     ########### TODO: starting at max index, get best alignment ##################
+
+    # use rules here
+
+    # something recursive could be cool
+
+    best += traverse_table(table, starting_x, starting_y, s, t, best)
     
     return best
+
+def traverse_table(table, x, y, s, t, best): # recursive table traversal function
+
+	print(table[x][y])
+
+	if(table[x][y] != 0):
+
+		print(t[x-1])
+
+		best += t[x-1]
+
+		# print(x)
+
+		val_a = table[x][y]
+		val_b = table[x][y]
+		val_c = table[x][y]
+
+		next_x = 0
+		next_y = 0
+
+		# diagonal
+
+		if(t[x - 1] == s[y - 1]):
+
+			val_a += 1 + table[x-1][y-1]
+
+		else:
+
+			val_a += -1 + table[x-1][y-1]
+
+		# up
+
+		val_b += -2 + table[x-1][y]
+
+		# left
+
+		val_c += -2 + table[x][y-1]
+
+		max_val = max(val_a, val_b, val_c)
+
+		if(max_val == val_a):
+
+			next_x = x - 1
+			next_y = y - 1
+
+		elif(max_val == val_b):
+
+			next_x = x - 1
+			next_y = y
+
+		else:
+
+			next_x = x
+			next_y = y - 1
+
+		best = traverse_table(table, next_x, next_y, s, t, best)
+		best = best[::-1]
+
+	return best # we want reversed string as best alignment
 
 def main():
 
     s = "CATCACCT"
     t = "GATACCC"
-    best = ""
     userInput = ""
 
     #### TODO: Allow reading in flu_0.txt to strings in correct format.. ####
@@ -208,15 +275,19 @@ def main():
     # sift through strings and calc the table's values
 
     table = calc_table_vals(table, s, t)
+
+    # save table (optional for user)
     
-    user_input = input("Save generated table to file? (y/n)")
+    # user_input = input("Save generated table to file? (y/n)")
     
-    if user_input in ["y", "Y"]:
-        print_table_to_file(table)
+    # if user_input in ["y", "Y"]:
+        # print_table_to_file(table)
 
     # traverse our table for the best alignment
 
     best = get_alignment(table, s, t)
+
+    print("Best Alignment: " + best)
 
     print("\n")
 
