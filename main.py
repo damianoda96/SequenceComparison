@@ -185,11 +185,7 @@ def get_alignment(table, s, t): # traverse through values for best alignment
     print("\nMax: " + str(max_val))
     print("Index: " + str(j) + "," + str(i))
 
-    ########### TODO: starting at max index, get best alignment ##################
-
-    # use rules here
-
-    # something recursive could be cool
+    # recursive function to get best aligned sequence
 
     best += traverse_table(table, starting_x, starting_y, s, t, best)
     
@@ -288,8 +284,6 @@ def main():
     print("Best Alignment: " + best)
 
     print("\n")
-
-
 
 main()
 
