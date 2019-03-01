@@ -32,7 +32,7 @@ def read_in_sequences(message):
     return sequence;
 
 
-def print_table_to_file(table):
+def print_table_to_file(table, s, t):
     
     notSaved = True;
     
@@ -46,9 +46,25 @@ def print_table_to_file(table):
         
             file = open(file_name, "w")
             
+            label_start_s = "  "
+            file.write(label_start_s)
+            label_s = "e" + s
+            label_t = "e" + t
+            
+            for j in range(len(label_s)):
+                file.write(label_s[j])
+                file.write(" ")
+            
+            file.write(" \n")
+            
             for i in range(len(table)):	
+                
+                file.write(label_t[i])
+                file.write(" ")
+                
                 for j in range(len(table[i])):
                     file.write(str(table[i][j]) + " ")
+                    
                 file.write("\n")
         
         except:
@@ -65,8 +81,28 @@ def print_table_to_file(table):
     file.close();
     
     return 0;
+
+
+def print_table(table, s, t):
     
+    print(" ", " ", end = '')
     
+    letter_label_s = "e" + s
+    letter_label_t = "e" + t
+    
+    for j in range(len(letter_label_s)):
+        print(letter_label_s[j], " ", end = '')
+    
+    for i in range(len(table)):	
+        
+        print()
+        
+        print(letter_label_t[i], " ", end = '')
+        
+        for j in range(len(table[i])):
+            print(table[i][j], " ", end = '')
+            
+
 
 def make_table(s, t):
     
@@ -142,11 +178,7 @@ def calc_table_vals(table, s, t):
                     table[i][j] = 0
 
     # print out to verify
-
-    for i in range(len(table)):	
-        for j in range(len(table[i])):
-            print(table[i][j], " ", end = '')
-        print()
+    print_table(table, s, t)
     
     return table
 
@@ -272,7 +304,7 @@ def main():
     # user_input = input("Save generated table to file? (y/n)")
     
     # if user_input == "y" or user_input == "Y":
-    #print_table_to_file(table)
+    print_table_to_file(table, s, t)
 
     # traverse our table for the best alignment
 
@@ -283,5 +315,6 @@ def main():
     print("\n")
 
 main()
+
 
 
