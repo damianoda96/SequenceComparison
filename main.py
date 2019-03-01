@@ -2,35 +2,34 @@
 import sys;
 
 
-def read_in_sequences():
+def read_in_sequences(message):
     
-    sequence1 = " "
-    sequence2 = " "
+    sequence = " "
     not_read = True
     
     while (not_read):
         
-        file_name = input("\nEnter the name of the file to load:\n")
+        file_name = input(message)
         
         try:
-            print(os.path.abspath(file_name))
-            file = open(file_name, "r")
-            
-            sequence1 = file.readline().strip() 
-            sequence2 = file.readline().strip() 
-            
+            with open(file_name, "r") as file:
+                for line in file:
+                    
+                    # Skip data other then the sequence itself in the Genebank Coding Sequences FASTA Nucleotide 
+                    # file format so that it may be used without prior modification. 
+                    if line[0] != ">":
+                        sequence += line.strip()
         except:
         
-            print("Trouble reading input file. Make sure name is correct and the file is in the right format.");
+            print("\nTrouble reading input file. Make sure name is correct and the file is in the right format.\n");
             
         else:
-            
+            #print(sequence)
             print("\nFile read successfully.\n")
             not_read = False
             file.close()
-        
-    retVal = (sequence1, sequence2)
-    return retVal;
+            
+    return sequence;
 
 
 def print_table_to_file(table):
@@ -39,25 +38,25 @@ def print_table_to_file(table):
     
     while (notSaved):
     
-        file_name = input("\nEnter a name for the alignment table file:\n")
-        file_name = file_name + ".txt"
-    
+        user_input = input("\nEnter a name for the alignment table file:\n")
+        file_name = user_input + ".txt"
+        value_output = ""
+        
         try:
         
             file = open(file_name, "w")
             
             for i in range(len(table)):	
                 for j in range(len(table[i])):
-                    file.write(table[i][j], " ", end = '')
-                file.write()
+                    file.write(str(table[i][j]) + " ")
+                file.write("\n")
         
         except:
-            
-            if ".txt" in file_name:
+        
+            if ".txt" in input:
                 print("\nError writing to file.\n")
             else:
                 print("\nPlease do not include file extension/type in the entered name.\n")
-        
         else:
             
             print("\nTable save successful.\n");
@@ -193,62 +192,62 @@ def get_alignment(table, s, t): # traverse through values for best alignment
 
 def traverse_table(table, x, y, s, t, best): # recursive table traversal function
 
-	print(table[x][y])
+    print(table[x][y])
 
-	if(table[x][y] != 0):
+    if(table[x][y] != 0):
 
-		print(t[x-1])
+        print(t[x-1])
 
-		best += t[x-1]
+        best += t[x-1]
 
-		# print(x)
+        # print(x)
 
-		val_a = table[x][y]
-		val_b = table[x][y]
-		val_c = table[x][y]
+        val_a = table[x][y]
+        val_b = table[x][y]
+        val_c = table[x][y]
 
-		next_x = 0
-		next_y = 0
+        next_x = 0
+        next_y = 0
 
-		# diagonal
+        # diagonal
 
-		if(t[x - 1] == s[y - 1]):
+        if(t[x - 1] == s[y - 1]):
 
-			val_a += 1 + table[x-1][y-1]
+            val_a += 1 + table[x-1][y-1]
 
-		else:
+        else:
 
-			val_a += -1 + table[x-1][y-1]
+            val_a += -1 + table[x-1][y-1]
 
-		# up
+        # up
 
-		val_b += -2 + table[x-1][y]
+        val_b += -2 + table[x-1][y]
 
-		# left
+        # left
 
-		val_c += -2 + table[x][y-1]
+        val_c += -2 + table[x][y-1]
 
-		max_val = max(val_a, val_b, val_c)
+        max_val = max(val_a, val_b, val_c)
 
-		if(max_val == val_a):
+        if(max_val == val_a):
 
-			next_x = x - 1
-			next_y = y - 1
+            next_x = x - 1
+            next_y = y - 1
 
-		elif(max_val == val_b):
+        elif(max_val == val_b):
 
-			next_x = x - 1
-			next_y = y
+            next_x = x - 1
+            next_y = y
 
-		else:
+        else:
 
-			next_x = x
-			next_y = y - 1
+            next_x = x
+            next_y = y - 1
 
-		best = traverse_table(table, next_x, next_y, s, t, best)
-		best = best[::-1]
+        best = traverse_table(table, next_x, next_y, s, t, best)
+        best = best[::-1]
 
-	return best # we want reversed string as best alignment
+    return best # we want reversed string as best alignment
 
 def main():
 
@@ -256,11 +255,9 @@ def main():
     t = "GATACCC"
     userInput = ""
     
-    #file_data = read_in_sequences()
-    
     # simpler to test with above assinments for now
-    #s = file_data[0]
-    #t = file_data[1]
+    #s = read_in_sequences("\nEnter the name of the first sequence file to load:\n")
+    #t = read_in_sequences("\nEnter the name of the seconde sequence file to load:\n")
 
     # make table of correct size, fill with zeros
 
@@ -274,8 +271,8 @@ def main():
     
     # user_input = input("Save generated table to file? (y/n)")
     
-    # if user_input in ["y", "Y"]:
-        # print_table_to_file(table)
+    # if user_input == "y" or user_input == "Y":
+    #print_table_to_file(table)
 
     # traverse our table for the best alignment
 
@@ -286,6 +283,5 @@ def main():
     print("\n")
 
 main()
-
 
 
