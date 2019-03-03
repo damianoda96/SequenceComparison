@@ -1,6 +1,8 @@
 # Bioinformatics Project 2
 import sys;
 
+sys.setrecursionlimit(0x100000)
+
 
 def read_in_sequences(message):
     
@@ -178,7 +180,7 @@ def calc_table_vals(table, s, t):
                     table[i][j] = 0
 
     # print out to verify
-    print_table(table, s, t)
+    # print_table(table, s, t)
     
     return table
 
@@ -213,8 +215,8 @@ def get_alignment(table, s, t): # traverse through values for best alignment
                 starting_x = i
                 starting_y = j
     
-    print("\nMax: " + str(max_val))
-    print("Index: " + str(j) + "," + str(i))
+    # print("\nMax: " + str(max_val))
+    # print("Index: " + str(j) + "," + str(i))
 
     # recursive function to get best aligned sequence
 
@@ -224,11 +226,11 @@ def get_alignment(table, s, t): # traverse through values for best alignment
 
 def traverse_table(table, x, y, s, t, best): # recursive table traversal function
 
-    print(table[x][y])
+    # print(table[x][y])
 
     if(table[x][y] != 0):
 
-        print(t[x-1])
+        #print(t[x-1])
 
         best += t[x-1]
 
@@ -284,13 +286,13 @@ def traverse_table(table, x, y, s, t, best): # recursive table traversal functio
 
 def main():
 
-    s = "CATCACCT"
-    t = "GATACCC"
+    #s = "CATCACCT"
+    #t = "GATACCC"
     userInput = ""
     
     # simpler to test with above assinments for now
-    #s = read_in_sequences("\nEnter the name of the first sequence file to load:\n")
-    #t = read_in_sequences("\nEnter the name of the seconde sequence file to load:\n")
+    s = read_in_sequences("\nEnter the name of the first sequence file to load:\n")
+    t = read_in_sequences("\nEnter the name of the seconde sequence file to load:\n")
 
     # make table of correct size, fill with zeros
 
@@ -312,6 +314,7 @@ def main():
     best = get_alignment(table, s, t)
 
     print("Best Alignment: " + best)
+    print(len(alignment))
 
     print("\n")
 
