@@ -223,8 +223,8 @@ def get_alignment(table, s, t): # traverse through values for best alignment
     
     best + traverse_table(table, starting_x, starting_y, s, t, best)
     
-    best[0] = best[0][::-1]
-    best[1] = best[1][::-1]
+    best[0] = best[0][::-1].strip()
+    best[1] = best[1][::-1].strip()
     
     return best
 
@@ -309,8 +309,8 @@ def main():
     userInput = ""
     
     # simpler to test with above assinments for now
-    #s = read_in_sequences("\nEnter the name of the first sequence file to load:\n")
-    #t = read_in_sequences("\nEnter the name of the seconde sequence file to load:\n")
+    s = read_in_sequences("\nEnter the name of the first sequence file to load:\n")
+    t = read_in_sequences("\nEnter the name of the seconde sequence file to load:\n")
 
     # make table of correct size, fill with zeros
 
@@ -331,7 +331,7 @@ def main():
 
     best = get_alignment(table, s, t)
 
-    alignmentPair = best[1] + "\n" + best[0]
+    alignmentPair = best[1] + "\n\n" + best[0]
     print("\nBest Alignment: \n\n" + alignmentPair)
     print("\nLength: ", len(best[0]))
 
@@ -342,7 +342,7 @@ def main():
 
     # let's remove best from the s and see what's left...
 
-    s_without_t = s.replace(best[0], '')
+    #s_without_t = s.replace(best[0], '')
     # t_without_s = t.replace(best, '')
 
     print("Remainder: " + s_without_t)
