@@ -330,6 +330,20 @@ def main():
     print("Remainder: " + s_without_t)
     print("Remainder Length: " + str(len(s_without_t)))
 
+    # Get some statistics 
+
+    # the difference in lengths of the compared segments
+
+    indels = len(s) - len(t)
+    print("INDELS: " + str(indels))
+
+    # synonymous mutations:
+
+    syn_muts = ""
+
+    # non-synonymous mutations:
+
+    non_syn_muts = ""
 
     #print("\n")
 
