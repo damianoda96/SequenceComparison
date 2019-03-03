@@ -201,8 +201,6 @@ def traverse_table(table, x, y, s, t, best): # recursive table traversal functio
 
 		best += t[x-1]
 
-		# print(x)
-
 		val_a = table[x][y]
 		val_b = table[x][y]
 		val_c = table[x][y]
@@ -246,9 +244,10 @@ def traverse_table(table, x, y, s, t, best): # recursive table traversal functio
 			next_y = y - 1
 
 		best = traverse_table(table, next_x, next_y, s, t, best)
-		best = best[::-1]
 
-	return best # we want reversed string as best alignment
+		best = best[::-1] # we want reversed string as best alignment
+
+	return best
 
 def main():
 
