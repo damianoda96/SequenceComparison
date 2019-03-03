@@ -299,6 +299,31 @@ def traverse_table(table, x, y, s, t, best): # recursive table traversal functio
         
     return best # we want reversed string as best alignment
 
+
+def find_other_muts(best):
+    
+    
+    
+    return 0;
+
+
+def find_indel_count(best):
+    
+    
+    
+    return 0
+
+def analyze_alignment_mutations(best):
+    
+    indel_count = find_indel_count(best)
+    
+    #print result
+    
+    # will name better when I see if it will be better to find both type sin one function or two
+    other_mut_count = find_other_muts(best)
+    
+    #print results
+
 def main():
 
     # Swapping sequences to ones n which gaps must be considered to test that/.
@@ -347,21 +372,10 @@ def main():
 
     #print("Remainder: " + s_without_t)
     #print("Remainder Length: " + str(len(s_without_t)))
+    
+    # find mutations and output the count of each type
+    analyze_alignment_mutations(best)
 
-    # Get some statistics 
-
-    # the difference in lengths of the compared segments 
-
-    indels = len(s) - len(t)
-    print("INDELS: ", str(indels))
-
-    # synonymous mutations:
-
-    syn_muts = ""
-
-    # non-synonymous mutations:
-
-    non_syn_muts = ""
 
     #print("\n")
 
