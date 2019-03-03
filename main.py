@@ -232,7 +232,7 @@ def traverse_table(table, x, y, s, t, best): # recursive table traversal functio
 
     # print(table[x][y])
 
-    if(table[x][y] != 0):
+    if(table[x][y] > 0):
 
         #print(t[x-1])
 
