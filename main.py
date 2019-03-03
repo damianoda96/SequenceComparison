@@ -210,23 +210,33 @@ def get_alignment(table, s, t): # traverse through values for best alignment
     
     for i in range(len(table)):
         for j in range(len(table[i])):
-            if table[i][j] > max_val:
+            if table[i][j] >= max_val:
                 max_val = table[i][j]
+
                 starting_x = i
                 starting_y = j
     
-    # recursive function to get best aligned sequence
+    # print("\nMax: " + str(max_val))
+    # print("Index: " + str(j) + "," + str(i))
 
-    best = traverse_table(table, starting_x, starting_y, s, t, best)
+    # Add starting base pair, the build the best aligned sequence from there
+    
+    best + traverse_table(table, starting_x, starting_y, s, t, best)
+    
+    best[0] = best[0][::-1]
+    best[1] = best[1][::-1]
     
     return best
 
 def traverse_table(table, x, y, s, t, best): # recursive table traversal function
 
-    if(table[x][y] > 0):
+    # print(table[x][y])
 
-        best[0] += t[x-1]
-        best[1] += s[y-1]
+    if(table[x][y] != 0):
+
+        #print(t[x-1])
+
+        # print(x)
 
         val_a = table[x][y]
         val_b = table[x][y]
@@ -253,41 +263,49 @@ def traverse_table(table, x, y, s, t, best): # recursive table traversal functio
 
         val_c += -2 + table[x][y-1]
 
-        # get max of three
-
         max_val = max(val_a, val_b, val_c)
+
+        # Set where to move to next, and decide if the two current letters
+        # should be matched, or only one choosen and a gap inserted. 
 
         if(max_val == val_a):
 
             next_x = x - 1
             next_y = y - 1
-            # best += t[x-1]
+            
+            if(table[x][y] != 0):
+                best[0] += t[next_x]
+                best[1] += s[next_y]
 
         elif(max_val == val_b):
 
             next_x = x - 1
             next_y = y
-            # best += '-'
+            
+            if(table[x][y] != 0):
+                best[0] += t[next_x]
+                best[1] += "-"
 
         else:
 
             next_x = x
             next_y = y - 1
-            # best+= '-'
-
-
-        best = traverse_table(table, next_x, next_y, s, t, best)
-
-        best[0] = best[0][::-1]
-        best[1] = best[1][::-1]
+            
+            if(table[x][y] != 0):
+                best[0] += "-"
+                best[1] += s[next_y]
+            
+        traverse_table(table, next_x, next_y, s, t, best)
         
     return best # we want reversed string as best alignment
 
 def main():
 
-    s = "CATCACCT"
-    t = "GATACCC"
-
+    # Swapping sequences to ones n which gaps must be considered to test that/.
+    #s = "CATCACCT"
+    s = "TGTTACGGG"
+    #t = "GATACCC"
+    t = "GGTTGACTA"
     userInput = ""
     
     # simpler to test with above assinments for now
@@ -313,9 +331,9 @@ def main():
 
     best = get_alignment(table, s, t)
 
-    alignmentPair = best[0] + "\n" + best[1]
+    alignmentPair = best[1] + "\n" + best[0]
     print("\nBest Alignment: \n\n" + alignmentPair)
-    print("\nLength: ", len((best[0])))
+    print("\nLength: ", len(best[0]))
 
     print("S length: " + str(len(s)))
     print("T length: " + str(len(t)))
