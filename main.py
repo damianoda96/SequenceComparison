@@ -40,7 +40,7 @@ def print_table_to_file(table, s, t):
     
     while (notSaved):
     
-        user_input = input("\nEnter a name for the alignment table file:\n")
+        user_input = input("\n\nEnter a name for the alignment table file:\n")
         file_name = user_input + ".txt"
         value_output = ""
         
@@ -103,7 +103,8 @@ def print_table(table, s, t):
         
         for j in range(len(table[i])):
             print(table[i][j], " ", end = '')
-            
+    
+    print("\n")
 
 
 def make_table(s, t):
@@ -180,7 +181,7 @@ def calc_table_vals(table, s, t):
                     table[i][j] = 0
 
     # print out to verify
-    # print_table(table, s, t)
+    #print_table(table, s, t)
     
     return table
 
@@ -203,7 +204,7 @@ def get_alignment(table, s, t): # traverse through values for best alignment
     starting_x = 0
     starting_y = 0
     max_val = table[0][0] # starting point
-    best = ""
+    best = ["", ""]
     
     # get max value in all of table as starting point
     
@@ -224,7 +225,8 @@ def traverse_table(table, x, y, s, t, best): # recursive table traversal functio
 
     if(table[x][y] > 0):
 
-        #best += t[x-1]
+        best[0] += t[x-1]
+        best[1] += s[y-1]
 
         val_a = table[x][y]
         val_b = table[x][y]
@@ -259,7 +261,7 @@ def traverse_table(table, x, y, s, t, best): # recursive table traversal functio
 
             next_x = x - 1
             next_y = y - 1
-            best += t[x-1]
+            # best += t[x-1]
 
         elif(max_val == val_b):
 
@@ -275,22 +277,22 @@ def traverse_table(table, x, y, s, t, best): # recursive table traversal functio
 
 
         best = traverse_table(table, next_x, next_y, s, t, best)
-        best = best[::-1]
 
-    best = best[::-1]
-
+        best[0] = best[0][::-1]
+        best[1] = best[1][::-1]
+        
     return best # we want reversed string as best alignment
 
 def main():
 
-    # s = "CATCACCT"
-    # t = "GATACCC"
+    s = "CATCACCT"
+    t = "GATACCC"
 
     userInput = ""
     
     # simpler to test with above assinments for now
-    s = read_in_sequences("\nEnter the name of the first sequence file to load:\n")
-    t = read_in_sequences("\nEnter the name of the seconde sequence file to load:\n")
+    #s = read_in_sequences("\nEnter the name of the first sequence file to load:\n")
+    #t = read_in_sequences("\nEnter the name of the seconde sequence file to load:\n")
 
     # make table of correct size, fill with zeros
 
@@ -305,14 +307,15 @@ def main():
     # user_input = input("Save generated table to file? (y/n)")
     
     # if user_input == "y" or user_input == "Y":
-    print_table_to_file(table, s, t)
+    #print_table_to_file(table, s, t)
 
     # traverse our table for the best alignment
 
     best = get_alignment(table, s, t)
 
-    print("Best Alignment: " + best)
-    print("Length: " + str(len(best)))
+    alignmentPair = best[0] + "\n" + best[1]
+    print("\nBest Alignment: \n\n" + alignmentPair)
+    print("\nLength: ", len(best))
 
     print("S length: " + str(len(s)))
     print("T length: " + str(len(t)))
