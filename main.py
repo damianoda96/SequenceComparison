@@ -315,7 +315,7 @@ def main():
 
     alignmentPair = best[0] + "\n" + best[1]
     print("\nBest Alignment: \n\n" + alignmentPair)
-    print("\nLength: ", len(best))
+    print("\nLength: ", len((best[0])))
 
     print("S length: " + str(len(s)))
     print("T length: " + str(len(t)))
@@ -324,7 +324,7 @@ def main():
 
     # let's remove best from the s and see what's left...
 
-    s_without_t = s.replace(best, '')
+    s_without_t = s.replace(best[0], '')
     # t_without_s = t.replace(best, '')
 
     print("Remainder: " + s_without_t)
