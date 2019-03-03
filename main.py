@@ -131,7 +131,7 @@ def make_table(s, t):
 
 def calc_table_vals(table, s, t):
     
-    # alwasys choose best case, should never be negative
+    # always choose best case, should never be negative
     
     match = 1
     mismatch = -1
@@ -211,30 +211,20 @@ def get_alignment(table, s, t): # traverse through values for best alignment
         for j in range(len(table[i])):
             if table[i][j] > max_val:
                 max_val = table[i][j]
-
                 starting_x = i
                 starting_y = j
     
-    # print("\nMax: " + str(max_val))
-    # print("Index: " + str(j) + "," + str(i))
-
     # recursive function to get best aligned sequence
 
-    best += traverse_table(table, starting_x, starting_y, s, t, best)
+    best = traverse_table(table, starting_x, starting_y, s, t, best)
     
     return best
 
 def traverse_table(table, x, y, s, t, best): # recursive table traversal function
 
-    # print(table[x][y])
+    if(table[x][y] > 0):
 
-    if(table[x][y] != 0):
-
-        #print(t[x-1])
-
-        best += t[x-1]
-
-        # print(x)
+        #best += t[x-1]
 
         val_a = table[x][y]
         val_b = table[x][y]
@@ -261,33 +251,41 @@ def traverse_table(table, x, y, s, t, best): # recursive table traversal functio
 
         val_c += -2 + table[x][y-1]
 
+        # get max of three
+
         max_val = max(val_a, val_b, val_c)
 
         if(max_val == val_a):
 
             next_x = x - 1
             next_y = y - 1
+            best += t[x-1]
 
         elif(max_val == val_b):
 
             next_x = x - 1
             next_y = y
+            # best += '-'
 
         else:
 
             next_x = x
             next_y = y - 1
+            # best+= '-'
 
 
         best = traverse_table(table, next_x, next_y, s, t, best)
         best = best[::-1]
 
+    best = best[::-1]
+
     return best # we want reversed string as best alignment
 
 def main():
 
-    #s = "CATCACCT"
-    #t = "GATACCC"
+    # s = "CATCACCT"
+    # t = "GATACCC"
+
     userInput = ""
     
     # simpler to test with above assinments for now
@@ -314,9 +312,23 @@ def main():
     best = get_alignment(table, s, t)
 
     print("Best Alignment: " + best)
-    print(len(alignment))
+    print("Length: " + str(len(best)))
+
+    print("S length: " + str(len(s)))
+    print("T length: " + str(len(t)))
 
     print("\n")
+
+    # let's remove best from the s and see what's left...
+
+    s_without_t = s.replace(best, '')
+    # t_without_s = t.replace(best, '')
+
+    print("Remainder: " + s_without_t)
+    print("Remainder Length: " + str(len(s_without_t)))
+
+
+    #print("\n")
 
 main()
 
