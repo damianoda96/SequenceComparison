@@ -30,8 +30,8 @@ def read_in_sequences(message):
             print("\nFile read successfully.\n")
             not_read = False
             file.close()
-            
-    return sequence;
+    
+    return sequence.strip();
 
 
 def print_table_to_file(table, s, t):
@@ -335,8 +335,8 @@ def main():
     print("\nBest Alignment: \n\n" + alignmentPair)
     print("\nLength: ", len(best[0]))
 
-    print("S length: " + str(len(s)))
-    print("T length: " + str(len(t)))
+    print("S length: ", str(len(s)))
+    print("T length: ", str(len(t)))
 
     print("\n")
 
@@ -345,15 +345,15 @@ def main():
     #s_without_t = s.replace(best[0], '')
     # t_without_s = t.replace(best, '')
 
-    print("Remainder: " + s_without_t)
-    print("Remainder Length: " + str(len(s_without_t)))
+    #print("Remainder: " + s_without_t)
+    #print("Remainder Length: " + str(len(s_without_t)))
 
     # Get some statistics 
 
-    # the difference in lengths of the compared segments
+    # the difference in lengths of the compared segments 
 
     indels = len(s) - len(t)
-    print("INDELS: " + str(indels))
+    print("INDELS: ", str(indels))
 
     # synonymous mutations:
 
