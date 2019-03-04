@@ -307,15 +307,23 @@ def find_other_muts(best):
     return 0;
 
 
-def find_indel_count(best):
+def find_indel_count(best, s, t):
     
+    indels = abs(len(s) - len(t));
+
+    # check for frameshift muts
+
+    if(indels % 3 == 0): # if indel can be divided by 3, frameshift mut is present
+    	print("INDEL and frameshift muts")
+
+    print("INDEL: " + str(indels))
     
     
     return 0
 
-def analyze_alignment_mutations(best):
+def analyze_alignment_mutations(best, s, t):
     
-    indel_count = find_indel_count(best)
+    indel_count = find_indel_count(best, s, t)
     
     #print result
     
@@ -374,7 +382,8 @@ def main():
     #print("Remainder Length: " + str(len(s_without_t)))
     
     # find mutations and output the count of each type
-    analyze_alignment_mutations(best)
+    # need s and t for indel count, will pass in params
+    analyze_alignment_mutations(best, s, t)
 
 
     #print("\n")
