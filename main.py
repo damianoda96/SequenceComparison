@@ -328,7 +328,7 @@ def analyze_alignment_mutations(best, s, t):
     #print result
     
     # will name better when I see if it will be better to find both type sin one function or two
-    other_mut_count = find_other_muts(best, t)
+    other_mut_count = find_other_muts(s, t)
     
     #print results
 
