@@ -323,14 +323,14 @@ def traverse_table(table, x, y, s, t, best): # recursive table traversal functio
     return best # we want reversed string as best alignment
 
 
-def find_other_muts(s, t):
+def find_other_muts(best):
     
     pc_table = {}
     
     read_in_protien_codon_table(pc_table)
     
     i = 0;
-    length = min( len(s), len(t) )
+    length = min( len(best[0]), len(best[1]) )
     
     synonymous_muts = 0;
     nonsynonymous_muts = 0
@@ -339,8 +339,9 @@ def find_other_muts(s, t):
     while (i <= length - 3):
         
         # if the codons in this frame both code the same amino acid, synonymous mutation found
-        print(s[i : i + 3], " ", t[i : i + 3], '\n')
-        if pc_table[ s[i : i + 3] ] == pc_table[ t[i : i + 3] ]:
+        #print(best[0][i : i + 3], " ", best[1][i : i + 3], '\n')
+        
+        if pc_table[ best[0][i : i + 3] ] == pc_table[ best[1][i : i + 3] ]:
                         
             synonymous_muts += 1
         else:
@@ -370,10 +371,10 @@ def analyze_alignment_mutations(best, s, t):
     
     indel_count = find_indel_count(best, s, t)
     
-    other_mut_counts = find_other_muts(s, t)
+   # other_mut_counts = find_other_muts(best)
     
-    print("\n\nSynonymous mutations: ", other_mut_counts[0])
-    print("\nNon-Synonymous mutations: ", other_mut_counts[1])
+    #print("\n\nSynonymous mutations: ", other_mut_counts[0])
+    #print("\nNon-Synonymous mutations: ", other_mut_counts[1])
 
 def main():
 
