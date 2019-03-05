@@ -34,6 +34,29 @@ def read_in_sequences(message):
     return sequence.strip();
 
 
+def read_in_protien_codon_table(pc_table):
+    
+    try:
+
+        with open("protien_codon_table.txt", "r") as file:
+            
+            for line in file:
+                
+                entry = line.split()
+                
+                pc_table[entry[0]] = entry[1]
+        
+        #print(pc_table)
+        
+    except:
+        print("\nCould not read in protien codon table file.\n")
+    
+    else:
+        file.close()
+    
+    return 0;
+
+
 def print_table_to_file(table, s, t):
     
     notSaved = True;
@@ -300,11 +323,33 @@ def traverse_table(table, x, y, s, t, best): # recursive table traversal functio
     return best # we want reversed string as best alignment
 
 
-def find_other_muts(best):
+def find_other_muts(s, t):
+    
+    pc_table = {}
+    
+    read_in_protien_codon_table(pc_table)
+    
+    i = 0;
+    length = min( len(s), len(t) )
+    
+    synonymous_muts = 0;
+    nonsynonymous_muts = 0
     
     
+    while (i <= length - 3):
+        
+        # if the codons in this frame both code the same amino acid, synonymous mutation found
+        print(s[i : i + 3], " ", t[i : i + 3], '\n')
+        if pc_table[ s[i : i + 3] ] == pc_table[ t[i : i + 3] ]:
+                        
+            synonymous_muts += 1
+        else:
+            nonsynonymous_muts += 1
+        
+        # Move in increments of 3 since checking codons. 
+        i += 3
     
-    return 0;
+    return [synonymous_muts, nonsynonymous_muts];
 
 
 def find_indel_count(best, s, t):
@@ -314,7 +359,7 @@ def find_indel_count(best, s, t):
     # check for frameshift muts
 
     if(indels % 3 == 0): # if indel can be divided by 3, frameshift mut is present
-    	print("INDEL and frameshift muts")
+        print("INDEL and frameshift muts")
 
     print("INDEL: " + str(indels))
     
@@ -325,12 +370,10 @@ def analyze_alignment_mutations(best, s, t):
     
     indel_count = find_indel_count(best, s, t)
     
-    #print result
+    other_mut_counts = find_other_muts(s, t)
     
-    # will name better when I see if it will be better to find both type sin one function or two
-    other_mut_count = find_other_muts(s, t)
-    
-    #print results
+    print("\n\nSynonymous mutations: ", other_mut_counts[0])
+    print("\nNon-Synonymous mutations: ", other_mut_counts[1])
 
 def main():
 
@@ -368,8 +411,8 @@ def main():
     print("\nBest Alignment: \n\n" + alignmentPair)
     print("\nLength: ", len(best[0]))
 
-    print("S length: ", str(len(s)))
-    print("T length: ", str(len(t)))
+    print("S/Shanghai length: ", str(len(s)))
+    print("T/Ohio length: ", str(len(t)))
 
     print("\n")
 
