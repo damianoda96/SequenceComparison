@@ -376,6 +376,19 @@ def analyze_alignment_mutations(best):
     print("\nNon-Synonymous mutations: ", non_synonymous_muts)
     print("\nT Strand Indels: ", t_indels)
     print("\nS Strand Indels: ", s_indels)
+    
+    return 0
+
+
+def print_alignment(best):
+    
+    # make similar to BLAST output. 
+    print("\nBest Alignment: \n\n")
+    
+    
+    
+    return 0
+
 
 def main():
 
@@ -409,8 +422,7 @@ def main():
 
     best = get_alignment(table, s, t)
 
-    alignmentPair = best[1] + "\n\n" + best[0]
-    print("\nBest Alignment: \n\n" + alignmentPair)
+    print_alignment(best)
     print("\nLength: ", len(best[0]))
 
     print("S/Shanghai length: ", str(len(s)))
