@@ -330,7 +330,7 @@ def analyze_alignment_mutations(best):
     read_in_protien_codon_table(pc_table)
     
     i = 0;
-    length = min( len(best[0]), len(best[1]) )
+    length = len(best[0])
     
     synonymous_muts = 0
     non_synonymous_muts = 0
