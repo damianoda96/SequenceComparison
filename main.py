@@ -323,7 +323,7 @@ def traverse_table(table, x, y, s, t, best): # recursive table traversal functio
     return best # we want reversed string as best alignment
 
 
-def find_other_muts(best):
+def analyze_alignment_mutations(best):
     
     pc_table = {}
     
@@ -332,49 +332,50 @@ def find_other_muts(best):
     i = 0;
     length = min( len(best[0]), len(best[1]) )
     
-    synonymous_muts = 0;
-    nonsynonymous_muts = 0
-    
+    synonymous_muts = 0
+    non_synonymous_muts = 0
+    t_indels = 0
+    s_indels = 0
     
     while (i <= length - 3):
         
-        # if the codons in this frame both code the same amino acid, synonymous mutation found
+        indel = False
+        
         #print(best[0][i : i + 3], " ", best[1][i : i + 3], '\n')
         
-        if pc_table[ best[0][i : i + 3] ] == pc_table[ best[1][i : i + 3] ]:
+        codon1 = best[0][i : i + 3]
+        codon2 = best[1][i : i + 3]
+        gap_index1 = codon1.find("-")
+        gap_index2 = codon2.find("-")
+        
+        # if a gap exists, and is new, not an extension of an already detected gap, increase indel count 
+        if gap_index1 != -1 and best[0][i + gap_index1 - 1] != "-":
+            
+            t_indels += 1
+            indel = True
+            
+        if gap_index2 != -1 and best[1][i + gap_index2 - 1] != "-":
+            
+            s_indels += 1
+            indel = True
+        
+        if indel == False:
+        
+            # if the codons in this frame both code the same amino acid, synonymous mutation found
+            if pc_table[codon1] == pc_table[codon2]:
                         
-            synonymous_muts += 1
-        else:
-            nonsynonymous_muts += 1
+                synonymous_muts += 1
+            
+            else:
+                non_synonymous_muts += 1
         
         # Move in increments of 3 since checking codons. 
         i += 3
     
-    return [synonymous_muts, nonsynonymous_muts];
-
-
-def find_indel_count(best, s, t):
-    
-    indels = abs(len(s) - len(t));
-
-    # check for frameshift muts
-
-    if(indels % 3 == 0): # if indel can be divided by 3, frameshift mut is present
-        print("INDEL and frameshift muts")
-
-    print("INDEL: " + str(indels))
-    
-    
-    return 0
-
-def analyze_alignment_mutations(best, s, t):
-    
-    indel_count = find_indel_count(best, s, t)
-    
-   # other_mut_counts = find_other_muts(best)
-    
-    #print("\n\nSynonymous mutations: ", other_mut_counts[0])
-    #print("\nNon-Synonymous mutations: ", other_mut_counts[1])
+    print("\nSynonymous mutations: ", synonymous_muts)
+    print("\nNon-Synonymous mutations: ", non_synonymous_muts)
+    print("\nT Strand Indels: ", t_indels)
+    print("\nS Strand Indels: ", s_indels)
 
 def main():
 
@@ -415,8 +416,6 @@ def main():
     print("S/Shanghai length: ", str(len(s)))
     print("T/Ohio length: ", str(len(t)))
 
-    print("\n")
-
     # let's remove best from the s and see what's left...
 
     #s_without_t = s.replace(best[0], '')
@@ -427,7 +426,7 @@ def main():
     
     # find mutations and output the count of each type
     # need s and t for indel count, will pass in params
-    analyze_alignment_mutations(best, s, t)
+    analyze_alignment_mutations(best)
 
 
     #print("\n")
