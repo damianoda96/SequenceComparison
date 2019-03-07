@@ -1,5 +1,6 @@
 # Bioinformatics Project 2
 import sys;
+import math
 
 sys.setrecursionlimit(0x100000)
 
@@ -382,10 +383,34 @@ def analyze_alignment_mutations(best):
 
 def print_alignment(best):
     
-    # make similar to BLAST output. 
     print("\nBest Alignment: \n\n")
     
+    # setting line sizes to match blast for easy comparison
+    chunk_size = 60 # aka chars per line
+    alignment_str = ""
     
+    chunk_frac = len(best[0]) / chunk_size
+    chunk_count = math.ceil(chunk_frac) 
+    i = 0
+    
+    while (i < chunk_count):
+        
+        current_pos = i * chunk_size
+        str_current_pos = str(current_pos) + " "
+        index = str_current_pos + " "
+        top_strand = best[0][current_pos : current_pos + chunk_size]
+        bottom_strand = best[1][current_pos : current_pos + chunk_size]
+        
+        if i == chunk_count - 1:
+            chunk_size = len(best[0]) - current_pos
+            
+        bond_str = (chunk_size * "|")
+        
+        alignment_str += index + top_strand + "\n " + (len(str_current_pos) * " ") + bond_str + "\n" + index + bottom_strand + "\n\n"
+        
+        i += 1
+    
+    print(alignment_str)
     
     return 0
 
