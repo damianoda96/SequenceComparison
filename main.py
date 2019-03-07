@@ -395,7 +395,8 @@ def print_alignment(best):
     
     while (i < chunk_count):
         
-        current_pos = i * chunk_size
+        # figure out current section and generate output lines for it
+        current_pos = (i * chunk_size) + 1
         str_current_pos = str(current_pos) + " "
         index = str_current_pos + " "
         top_strand = best[0][current_pos : current_pos + chunk_size]
@@ -404,9 +405,21 @@ def print_alignment(best):
         if i == chunk_count - 1:
             chunk_size = len(best[0]) - current_pos
             
-        bond_str = (chunk_size * "|")
+        bond_strand = "" 
         
-        alignment_str += index + top_strand + "\n " + (len(str_current_pos) * " ") + bond_str + "\n" + index + bottom_strand + "\n\n"
+        j = 0
+        
+        # check if each base pair are matches and line indicator if so
+        while (j < len(top_strand)):
+            
+            if top_strand[j] == bottom_strand[j]:
+                bond_strand += "|"
+            else:
+                bond_strand += " "
+            
+            j += 1
+        
+        alignment_str += index + top_strand + "\n " + (len(str_current_pos) * " ") + bond_strand + "\n" + index + bottom_strand + "\n\n"
         
         i += 1
     
