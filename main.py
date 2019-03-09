@@ -389,6 +389,9 @@ def print_alignment(best):
     chunk_size = 60 # aka chars per line
     alignment_str = ""
     
+    index_top = 1
+    index_bottom = 1
+    
     chunk_frac = len(best[0]) / chunk_size
     chunk_count = math.ceil(chunk_frac) 
     i = 0
@@ -396,10 +399,9 @@ def print_alignment(best):
     while (i < chunk_count):
         
         # figure out current section and generate output lines for it
-        current_pos = (i * chunk_size) + 1
-        str_current_pos = str(current_pos) + " "
-        index = str_current_pos + " "
-        top_strand = best[0][current_pos : current_pos + chunk_size]
+        current_pos = (i * chunk_size)
+        str_current_pos = str(current_pos + 1) + " "
+        top_strand =  best[0][current_pos : current_pos + chunk_size]
         bottom_strand = best[1][current_pos : current_pos + chunk_size]
         
         if i == chunk_count - 1:
@@ -419,8 +421,10 @@ def print_alignment(best):
             
             j += 1
         
-        alignment_str += index + top_strand + "\n " + (len(str_current_pos) * " ") + bond_strand + "\n" + index + bottom_strand + "\n\n"
+        alignment_str += str(index_top) + "  " + top_strand + "\n " + (len(str_current_pos) * " ") + bond_strand + "\n" + str(index_bottom) + "  " + bottom_strand + "\n\n"
         
+        index_top += 60 - top_strand.count('-')
+        index_bottom += 60 - bottom_strand.count('-')
         i += 1
     
     print(alignment_str)
@@ -465,8 +469,6 @@ def main():
 
     print("S/Shanghai length: ", str(len(s)))
     print("T/Ohio length: ", str(len(t)))
-
-    # let's remove best from the s and see what's left...
 
     #s_without_t = s.replace(best[0], '')
     # t_without_s = t.replace(best, '')
