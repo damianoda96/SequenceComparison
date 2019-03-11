@@ -35,11 +35,11 @@ def read_in_sequences(message):
     return sequence.strip();
 
 
-def read_in_protien_codon_table(pc_table):
+def read_in_amino_codon_table(pc_table):
     
     try:
 
-        with open("protien_codon_table.txt", "r") as file:
+        with open("amino_codon_table.txt", "r") as file:
             
             for line in file:
                 
@@ -326,9 +326,9 @@ def traverse_table(table, x, y, s, t, best): # recursive table traversal functio
 
 def analyze_alignment_mutations(best):
     
-    pc_table = {}
+    ac_table = {}
     
-    read_in_protien_codon_table(pc_table)
+    read_in_amino_codon_table(ac_table)
     
     i = 0;
     length = len(best[0])
@@ -363,7 +363,7 @@ def analyze_alignment_mutations(best):
         if indel == False:
         
             # if the codons in this frame both code the same amino acid, synonymous mutation found
-            if pc_table[codon1] == pc_table[codon2]:
+            if ac_table[codon1] == ac_table[codon2]:
                         
                 synonymous_muts += 1
             
