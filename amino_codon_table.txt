@@ -1,0 +1,64 @@
+AAA Lysine
+ATA Isoleucine
+ACA Threonine
+AGA Arginine
+AAT Asparagine
+ATT Isoleucine
+ACT Threonine
+AGT Serine
+AAC Asparagine
+ATC Isoleucine
+ACC Threonine
+AGC Serine
+AAG Lysine
+ATG Methionine
+ACG Threonine
+AGG Arginine
+TAA Stop
+TTA Leucine
+TCA Serine
+TGA stop Codon
+TAT Tyrosine
+TTT Phenylalanine
+TCT Serine
+TGT Cysteine
+TAC Tyrosine
+TTC Phenylalanine
+TCC Serine
+TGC Cysteine
+TAG Stop
+TTG Leucine
+TCG Serine
+TGG Tryptophan
+CAA Glutamine
+CTA Leucine
+CCA Proline
+CGA Arginine
+CAT Histidine
+CTT Leucine
+CCT Proline
+CGT Arginine
+CAC Histidine
+CTC Leucine
+CCC Proline
+CGC Arginine
+CAG Glutamine
+CTG Leucine
+CCG Proline
+CGG Arginine
+GAA Glutamic Acid
+GTA Valine
+GCA Alanine
+GGA Glycine
+GAT Aspartic Acid
+GTT Valine
+GCT Alanine
+GGT Glycine
+GAC Aspartic Acid
+GTC Valine
+GCC Alanine
+GGC Glycine
+GAG Glutamic Acid
+GTG Valine
+GCG Alanine
+GGG Glycine
