@@ -1,4 +1,9 @@
 
+"""
+This program reads in a BLASTn output file called 'align'.xml
+It displays alignment as well as BLASTn results.
+"""
+
 # >>> pip install xmltodict
 import xmltodict
 
