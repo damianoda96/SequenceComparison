@@ -1,7 +1,6 @@
 
 """
-This program reads in a BLASTn output file called 'align'.xml
-It displays hit as well as BLASTn results.
+Interface for BLAST-XML files.
 """
 
 # >>> pip install xmltodict
