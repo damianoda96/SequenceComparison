@@ -431,6 +431,31 @@ def print_alignment(best):
     
     return 0
 
+from blast_xml import BlastXML
+
+def analyze_hit(hit):
+    s = hit.seq_a
+    t = hit.seq_b
+    table = make_table(s,t)
+    table = calc_table_vals(table, s, t)
+    best = get_alignment(table, s, t)    
+    print("Length: ", len(best[0]))
+    print("S/Shanghai length: ", str(len(s)))
+    print("T/Ohio length: ", str(len(t)))
+    analyze_alignment_mutations(best)
+
+def test_with_blast():
+    megablast = BlastXML('./megablast.xml')
+    blastn = BlastXML('./blastn.xml')
+    
+    print('MEGA-BLAST Analysis')
+    for hit in megablast.hits:
+        analyze_hit(hit)
+
+    print('-'*20,'\nBLAST-N Analysis')
+    for hit in blastn.hits:
+        analyze_hit(hit)
+
 
 def main():
 
@@ -484,6 +509,7 @@ def main():
     #print("\n")
 
 main()
-
+print('---------\n\n\n----------')
+test_with_blast()
 
 
